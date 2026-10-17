@@ -12,3 +12,15 @@ body { font-family: Arial, sans-serif; margin: 0; }
 .menu { display: flex; gap: 20px; }
 .menu a { text-decoration: none; color: #fff; transition: color 0.2s; }
 .menu a:hover { color: #8f7bff; }
+main { max-width: 1000px; margin: 0 auto; padding: 24px; }
+.cards { display: flex; flex-wrap: wrap; gap: 24px; }
+.card { flex: 1 1 260px; border: 1px solid #ddd; border-radius: 8px; padding: 16px; }
+.card--highlight { border-color: #4426FF; background: #eef; }
+.card__price { font-weight: bold; }
+.badge { margin: 0 0 8px; font-size: 0.85rem; font-weight: bold; color: #4426FF; }
+.price-table { width: 100%; border-collapse: collapse; }
+.price-table th, .price-table td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+.price-table thead { background: #1a1a2e; color: #fff; }
+.num { text-align: right; }
+footer { padding: 24px; background: #1a1a2e; color: #fff; }
+footer a { color: #8f7bff; }
