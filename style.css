@@ -1,34 +1,194 @@
-body { font-family: Arial, sans-serif; margin: 0; }
+:root {
+  --accent: #4426ff;
+  --accent-light: #8f7bff;
+  --dark: #14142b;
+  --text: #24243b;
+  --muted: #5f5f7a;
+  --bg: #f7f7fb;
+  --border: #e4e4ef;
+}
 
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+}
+
+a:focus-visible { outline: 3px solid var(--accent-light); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- Nagłówek i menu ---------- */
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
-  background: #1a1a2e;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  padding: 14px 24px;
+  background: rgba(20, 20, 43, 0.88);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
-.logo { margin: 0; font-size: 1.4rem; font-weight: bold; color: #fff; }
-.menu { display: flex; gap: 20px; }
-.menu a { text-decoration: none; color: #fff; transition: color 0.2s; }
-.menu a:hover { color: #8f7bff; }
-main { max-width: 1000px; margin: 0 auto; padding: 24px; }
-.cards { display: flex; flex-wrap: wrap; gap: 24px; }
-.card { flex: 1 1 260px; border: 1px solid #ddd; border-radius: 8px; padding: 16px; }
-.card--highlight { border-color: #4426FF; background: #eef; }
-.card__price { font-weight: bold; }
-.badge { margin: 0 0 8px; font-size: 0.85rem; font-weight: bold; color: #4426FF; }
-.price-table { width: 100%; border-collapse: collapse; }
-.price-table th, .price-table td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
-.price-table thead { background: #1a1a2e; color: #fff; }
-.num { text-align: right; }
-footer { padding: 24px; background: #1a1a2e; color: #fff; }
-footer a { color: #8f7bff; }
-.card { transition: transform 0.2s, box-shadow 0.2s; }
-.card:hover { transform: translateY(-6px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); }
+.logo {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #fff;
+}
+.logo::before { content: "●"; margin-right: 8px; font-size: 0.7em; color: var(--accent-light); }
 
-@media (max-width: 600px) {
-  .site-header { flex-direction: column; gap: 12px; }
-  .menu { flex-direction: column; align-items: center; gap: 8px; }
+.menu { display: flex; gap: 24px; }
+.menu a {
+  position: relative;
+  padding: 4px 0;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s;
 }
-.hero-img { display: block; max-width: 100%; height: auto; margin: 0 0 24px; border-radius: 8px; }
+.menu a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 2px;
+  background: var(--accent-light);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.menu a:hover { color: var(--accent-light); }
+.menu a:hover::after { transform: scaleX(1); }
+
+/* ---------- Układ ---------- */
+main { max-width: 1000px; margin: 0 auto; padding: 24px 24px 48px; }
+section { padding: 32px 0; scroll-margin-top: 80px; }
+
+h2 { position: relative; margin: 40px 0 24px; font-size: 1.8rem; color: var(--dark); }
+h2::after {
+  content: "";
+  display: block;
+  width: 48px; height: 4px;
+  margin-top: 8px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+/* ---------- Sekcja wprowadzająca ---------- */
+.intro {
+  padding: 64px 40px;
+  border-radius: 20px;
+  color: #fff;
+  background: linear-gradient(135deg, #1a1a2e 0%, #3a22d9 100%);
+  box-shadow: 0 20px 40px rgba(68, 38, 255, 0.25);
+  animation: fadeUp 0.7s ease backwards;
+}
+.intro h1 { margin: 0 0 12px; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; }
+.intro p { max-width: 520px; margin: 0 0 28px; font-size: 1.1rem; color: #d9d4ff; }
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--accent);
+  background: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); }
+
+/* ---------- Karty ---------- */
+.cards { display: flex; flex-wrap: wrap; gap: 24px; }
+.card {
+  flex: 1 1 260px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(20, 20, 43, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s;
+  animation: fadeUp 0.6s ease backwards;
+}
+.card:nth-child(2) { animation-delay: 0.12s; }
+.card:nth-child(3) { animation-delay: 0.24s; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(20, 20, 43, 0.14); }
+.card h3 { margin: 0 0 8px; font-size: 1.2rem; color: var(--dark); }
+.card p { margin: 0 0 16px; color: var(--muted); }
+.card--highlight {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, #f0edff 0%, #fff 70%);
+  box-shadow: 0 8px 24px rgba(68, 38, 255, 0.18);
+}
+.badge {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff !important;
+  background: var(--accent);
+  border-radius: 999px;
+}
+.card .card__price { margin: 0; font-size: 1.35rem; font-weight: 800; color: var(--accent); }
+
+/* ---------- Tabela cennika ---------- */
+.price-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(20, 20, 43, 0.05);
+}
+.price-table th, .price-table td { padding: 14px 20px; text-align: left; }
+.price-table thead { background: var(--dark); color: #fff; }
+.price-table tbody tr { transition: background 0.2s; }
+.price-table tbody tr:nth-child(even) { background: #f5f4fc; }
+.price-table tbody tr:hover { background: #ebe8ff; }
+.price-table td { border-top: 1px solid var(--border); }
+.num { text-align: right !important; font-variant-numeric: tabular-nums; font-weight: 600; }
+
+/* ---------- Stopka ---------- */
+footer {
+  padding: 48px max(24px, calc((100% - 1000px) / 2));
+  color: #e6e3ff;
+  background: var(--dark);
+}
+footer h2 { margin-top: 0; color: #fff; }
+footer p { margin: 6px 0; }
+footer a { color: var(--accent-light); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+footer a:hover { border-bottom-color: var(--accent-light); }
+
+/* ---------- Animacje ---------- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Pojawianie się elementów przy przewijaniu (nowoczesne przeglądarki) */
+@supports (animation-timeline: view()) {
+  h2, .price-table {
+    animation: fadeUp linear backwards;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+/* ---------- Telefon ---------- */
+@media (max-width: 600px) {
+  .site-header { flex-direction: column; gap: 10px; }
+  .menu { gap: 20px; }
+  .intro { padding: 40px 24px; }
+  .price-table th, .price-table td { padding: 12px; }
+}
+
+/* Dla osób wrażliwych na ruch */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
