@@ -63,6 +63,22 @@ a:focus-visible { outline: 3px solid var(--accent-light); outline-offset: 3px; b
 .menu a:hover { color: var(--accent-light); }
 .menu a:hover::after { transform: scaleX(1); }
 
+/* ---------- Przycisk menu (widoczny tylko na telefonie) ---------- */
+.menu-toggle {
+  display: none;
+  padding: 8px 18px;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: transparent;
+  border: 2px solid var(--accent-light);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.menu-toggle:hover { background: rgba(143, 123, 255, 0.25); }
+.menu-toggle:focus-visible { outline: 3px solid var(--accent-light); outline-offset: 3px; }
+
 /* ---------- Układ ---------- */
 main { max-width: 1000px; margin: 0 auto; padding: 24px 24px 48px; }
 section { padding: 32px 0; scroll-margin-top: 80px; }
@@ -264,8 +280,13 @@ footer a:hover { border-bottom-color: var(--accent-light); }
   .intro { grid-template-columns: 1fr; padding: 40px 24px; }
 }
 @media (max-width: 600px) {
-  .site-header { flex-direction: column; gap: 10px; }
-  .menu { gap: 20px; }
+  .site-header { flex-wrap: wrap; gap: 10px; }
+  .menu-toggle { display: inline-block; }
+
+  /* menu schowane, pokazuje je klasa dodawana w app.js */
+  .menu { display: none; flex-basis: 100%; flex-direction: column; gap: 12px; }
+  .menu.menu--open { display: flex; }
+
   .price-table th, .price-table td { padding: 12px; }
 }
 
