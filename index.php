@@ -1,0 +1,122 @@
+<?php
+$firma = 'Szprycha';
+$rok = date('Y');
+?>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Szprycha – pracownia rowerowa</title>
+  <link rel="stylesheet" href="style.css?v=4">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <p class="logo">Szprycha</p>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav class="menu" id="menu">
+      <a href="#uslugi">Usługi</a>
+      <a href="#cennik">Cennik</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="uslugi">
+      <div class="intro">
+        <div class="intro__text">
+          <h1>Pracownia Rowerowa Szprycha</h1>
+          <p>Szybki serwis, uczciwe ceny i rower gotowy na kolejny sezon. Bydgoszcz.</p>
+          <a class="btn" href="#cennik">Zobacz cennik</a>
+          <ul class="stats">
+            <li><strong>12 lat</strong><span>doświadczenia</span></li>
+            <li><strong>2000+</strong><span>naprawionych rowerów</span></li>
+            <li><strong>24 h</strong><span>typowy czas naprawy</span></li>
+          </ul>
+        </div>
+        <img class="intro__img" src="rower.svg" alt="Rower na stojaku w warsztacie">
+      </div>
+
+      <h2>Usługi</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Przegląd</h3>
+          <p>Hamulce, przerzutki i smarowanie łańcucha.</p>
+          <p class="card__price">od 120 zł</p>
+        </article>
+        <article class="card card--highlight">
+          <p class="badge">Najczęściej wybierane</p>
+          <h3>Przegląd generalny</h3>
+          <p>Pełna regulacja, wymiana smarów, centrowanie kół.</p>
+          <p class="card__price">od 250 zł</p>
+        </article>
+        <article class="card">
+          <h3>Naprawa dętki</h3>
+          <p>Łatanie lub wymiana dętki z montażem.</p>
+          <p class="card__price">od 30 zł</p>
+        </article>
+      </div>
+
+      <h2>Jak to działa</h2>
+      <ol class="steps">
+        <li><h3>Przywozisz rower</h3><p>Bez umawiania, w godzinach otwarcia.</p></li>
+        <li><h3>Wyceniamy</h3><p>Przed naprawą dostajesz konkretną cenę.</p></li>
+        <li><h3>Odbierasz</h3><p>Dzwonimy, gdy rower jest gotowy.</p></li>
+      </ol>
+
+      <h2>Opinie klientów</h2>
+      <div class="reviews">
+        <figure class="review">
+          <blockquote><p>Rower jak nowy, a cena zgodna z wyceną. Polecam.</p></blockquote>
+          <figcaption>Marta, Bydgoszcz</figcaption>
+        </figure>
+        <figure class="review">
+          <blockquote><p>Szybka naprawa przed wyjazdem, w jeden dzień.</p></blockquote>
+          <figcaption>Piotr, Fordon</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="cennik">
+      <h2>Cennik</h2>
+      <table class="price-table">
+        <thead>
+          <tr><th>Usługa</th><th class="num">Cena</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Przegląd</td><td class="num">120 zł</td></tr>
+          <tr><td>Przegląd generalny</td><td class="num">250 zł</td></tr>
+          <tr><td>Naprawa dętki</td><td class="num">30 zł</td></tr>
+          <tr><td>Wymiana opony</td><td class="num">50 zł</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Najczęstsze pytania</h2>
+      <div class="faq">
+        <details>
+          <summary>Czy muszę się umawiać?</summary>
+          <p>Nie, wystarczy przyjść w godzinach otwarcia. Przy większych naprawach warto zadzwonić.</p>
+        </details>
+        <details>
+          <summary>Ile trwa przegląd?</summary>
+          <p>Standardowy przegląd zwykle robimy w 24 godziny.</p>
+        </details>
+        <details>
+          <summary>Czy wymieniacie części?</summary>
+          <p>Tak. Cenę części podajemy przed naprawą, nic nie dokładamy bez Twojej zgody.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+<footer id="kontakt">
+  <h2>Kontakt</h2>
+  <p>ul. Przykładowa 1, Bydgoszcz</p>
+  <p>Telefon: <a href="tel:+48500100200">500 100 200</a></p>
+  <p>E-mail: <a href="mailto:kontakt@szprycha.pl">kontakt@szprycha.pl</a></p>
+  <p>Godziny: pon–pt 10:00–18:00, sob 10:00–14:00</p>
+  <p>&copy; <?= $rok ?> <?= $firma ?></p>
+</footer>
+</body>
+</html>
