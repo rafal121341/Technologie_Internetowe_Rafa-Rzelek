@@ -80,12 +80,14 @@
         <thead>
           <tr><th>Usługa</th><th class="num">Cena</th></tr>
         </thead>
-        <tbody>
-          <tr><td>Przegląd</td><td class="num">120 zł</td></tr>
-          <tr><td>Przegląd generalny</td><td class="num">250 zł</td></tr>
-          <tr><td>Naprawa dętki</td><td class="num">30 zł</td></tr>
-          <tr><td>Wymiana opony</td><td class="num">50 zł</td></tr>
-        </tbody>
+  <tbody>
+  <?php foreach ($cennik as $usluga): ?>
+    <tr>
+      <td><?= htmlspecialchars($usluga['nazwa']) ?></td>
+      <td class="num"><?= $usluga['cena'] ?> zł</td>
+    </tr>
+  <?php endforeach; ?>
+</tbody>
       </table>
 
       <h2>Najczęstsze pytania</h2>
