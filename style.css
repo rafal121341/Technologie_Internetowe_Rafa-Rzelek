@@ -34,13 +34,17 @@ a:focus-visible { outline: 3px solid var(--accent-light); outline-offset: 3px; b
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   margin: 0;
   font-size: 1.4rem;
   font-weight: 800;
   letter-spacing: 0.5px;
   color: #fff;
+  text-decoration: none;
 }
-.logo::before { content: "●"; margin-right: 8px; font-size: 0.7em; color: var(--accent-light); }
+.logo svg { display: block; flex-shrink: 0; }
 
 .menu { display: flex; gap: 24px; }
 .menu a {
