@@ -9,7 +9,25 @@
 </head>
 <body>
   <header class="site-header">
+<<<<<<< HEAD
     <p class="logo">Szprychaa</p>
+=======
+    <a class="logo" href="#">
+      <svg viewBox="0 0 120 64" width="72" height="38"
+           role="img" aria-labelledby="logo-tytul">
+        <title id="logo-tytul">Szprycha</title>
+        <!-- koła -->
+        <circle cx="28" cy="42" r="18" fill="none" stroke="#8f7bff" stroke-width="5"/>
+        <circle cx="92" cy="42" r="18" fill="none" stroke="#8f7bff" stroke-width="5"/>
+        <!-- rama -->
+        <polyline points="28,42 48,14 80,14 92,42" fill="none" stroke="#8f7bff"
+                  stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+        <polyline points="48,14 60,42 80,14" fill="none" stroke="#8f7bff"
+                  stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+      <span>Szprycha</span>
+    </a>
+>>>>>>> a849003 (lab2: powitanie i wykres SVG)
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
     <nav class="menu" id="menu">
       <a href="#uslugi">Usługi</a>
@@ -80,14 +98,13 @@
         <thead>
           <tr><th>Usługa</th><th class="num">Cena</th></tr>
         </thead>
-  <tbody>
-  <?php foreach ($cennik as $usluga): ?>
-    <tr>
-      <td><?= htmlspecialchars($usluga['nazwa']) ?></td>
-      <td class="num"><?= $usluga['cena'] ?> zł</td>
-    </tr>
-  <?php endforeach; ?>
-</tbody>
+        <tbody>
+          <tr><td>Przegląd</td><td class="num">120 zł</td></tr>
+          <tr><td>Przegląd generalny</td><td class="num">250 zł</td></tr>
+          <tr><td>Naprawa dętki</td><td class="num">30 zł</td></tr>
+          <tr><td>Wymiana opony</td><td class="num">50 zł</td></tr>
+          <tr><td>Wymiana łańcucha</td><td class="num">70 zł</td></tr>
+        </tbody>
       </table>
 
       <h2>Najczęstsze pytania</h2>
@@ -114,6 +131,7 @@
     <p>Telefon: <a href="tel:+48500100200">500 100 200</a></p>
     <p>E-mail: <a href="mailto:kontakt@szprycha.pl">kontakt@szprycha.pl</a></p>
     <p>Godziny: pon–pt 10:00–18:00, sob 10:00–14:00</p>
+    <p>&copy; 2026 Szprycha</p>
   </footer>
 </body>
 </html>
