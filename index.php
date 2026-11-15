@@ -1,28 +1,25 @@
 <?php
+require 'baza.php';
+
 $firma = 'Szprycha';
 $rok = date('Y');
 
-// Bonus: powitanie z adresu, np. index.php?imie=Ola
+// powitanie z adresu, np. index.php?imie=Ola
 $imie = $_GET['imie'] ?? '';
 if (!is_string($imie) || trim($imie) === '') {
   $imie = 'Gościu';
 }
 
-$cennik = [
-  ['nazwa' => 'Przegląd',           'cena' => 120],
-  ['nazwa' => 'Przegląd generalny', 'cena' => 250],
-  ['nazwa' => 'Naprawa dętki',      'cena' => 30],
-  ['nazwa' => 'Wymiana opony',      'cena' => 50],
-  ['nazwa' => 'Wymiana łańcucha',   'cena' => 70],
-];
+// Lab 3: dane z bazy zamiast tablicy w kodzie
+$uslugi = $pdo->query('SELECT nazwa, cena FROM uslugi ORDER BY cena')->fetchAll();
 
-// Bonus: wymiary wykresu SVG liczone z tej samej tablicy $cennik
-$maxCena   = max(array_column($cennik, 'cena'));
-$szerEtyk  = 170;  // miejsce na nazwy usług po lewej
-$maxSlupek = 330;  // szerokość najdłuższego słupka
+// wymiary wykresu SVG liczone z tych samych danych
+$maxCena   = $uslugi ? max(array_column($uslugi, 'cena')) : 1;
+$szerEtyk  = 170;
+$maxSlupek = 330;
 $wysSlupek = 28;
 $odstep    = 14;
-$wysWykres = 10 + count($cennik) * ($wysSlupek + $odstep);
+$wysWykres = 10 + count($uslugi) * ($wysSlupek + $odstep);
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -122,10 +119,10 @@ $wysWykres = 10 + count($cennik) * ($wysSlupek + $odstep);
           <tr><th>Usługa</th><th class="num">Cena</th></tr>
         </thead>
         <tbody>
-          <?php foreach ($cennik as $usluga): ?>
+          <?php foreach ($uslugi as $usluga): ?>
             <tr>
               <td><?= htmlspecialchars($usluga['nazwa']) ?></td>
-              <td class="num"><?= $usluga['cena'] ?> zł</td>
+              <td class="num"><?= (int) $usluga['cena'] ?> zł</td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -136,7 +133,7 @@ $wysWykres = 10 + count($cennik) * ($wysSlupek + $odstep);
            role="img" aria-labelledby="wykres-tytul"
            style="max-width: 600px; height: auto; display: block; background: #fff; border: 1px solid #e4e4ef; border-radius: 14px;">
         <title id="wykres-tytul">Wykres słupkowy cen usług</title>
-        <?php foreach ($cennik as $i => $usluga):
+        <?php foreach ($uslugi as $i => $usluga):
           $y      = 10 + $i * ($wysSlupek + $odstep);
           $szer   = round($usluga['cena'] / $maxCena * $maxSlupek);
           $srodek = $y + $wysSlupek / 2 + 5;
@@ -146,7 +143,7 @@ $wysWykres = 10 + count($cennik) * ($wysSlupek + $odstep);
           <rect x="<?= $szerEtyk ?>" y="<?= $y ?>" width="<?= $szer ?>" height="<?= $wysSlupek ?>"
                 rx="6" fill="#4426ff"/>
           <text x="<?= $szerEtyk + $szer + 8 ?>" y="<?= $srodek ?>"
-                font-size="14" font-weight="700" fill="#14142b"><?= $usluga['cena'] ?> zł</text>
+                font-size="14" font-weight="700" fill="#14142b"><?= (int) $usluga['cena'] ?> zł</text>
         <?php endforeach; ?>
       </svg>
 
@@ -175,6 +172,7 @@ $wysWykres = 10 + count($cennik) * ($wysSlupek + $odstep);
     <p>E-mail: <a href="mailto:kontakt@szprycha.pl">kontakt@szprycha.pl</a></p>
     <p>Godziny: pon–pt 10:00–18:00, sob 10:00–14:00</p>
     <p>&copy; <?= $rok ?> <?= $firma ?></p>
+    <p><a href="login.php">Panel</a></p>
   </footer>
 </body>
 </html>
