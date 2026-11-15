@@ -110,7 +110,7 @@ $wysWykres = 10 + count($uslugi) * ($wysSlupek + $odstep);
           <figcaption>Piotr, Fordon</figcaption>
         </figure>
       </div>
-    </section>
+    </section>// fsdaf
 
     <section id="cennik">
       <h2>Cennik</h2>
