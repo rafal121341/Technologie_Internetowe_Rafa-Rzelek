@@ -10,11 +10,25 @@ if (!is_string($imie) || trim($imie) === '') {
   $imie = 'Gościu';
 }
 
-// Lab 3: dane z bazy zamiast tablicy w kodzie
-$uslugi = $pdo->query('SELECT nazwa, cena FROM uslugi ORDER BY cena')->fetchAll();
+// Bonus: filtr ceny z adresu, np. index.php?max=100
+$max = null;
+if (isset($_GET['max']) && is_string($_GET['max'])
+    && ctype_digit($_GET['max']) && strlen($_GET['max']) <= 9) {
+  $max = (int) $_GET['max'];
+}
 
-// wymiary wykresu SVG liczone z tych samych danych
-$maxCena   = $uslugi ? max(array_column($uslugi, 'cena')) : 1;
+if ($max !== null) {
+  $z = $pdo->prepare(
+    'SELECT nazwa, cena, popularnosc FROM uslugi WHERE cena <= :max ORDER BY cena');
+  $z->execute(['max' => $max]);
+  $uslugi = $z->fetchAll();
+} else {
+  $uslugi = $pdo->query(
+    'SELECT nazwa, cena, popularnosc FROM uslugi ORDER BY cena')->fetchAll();
+}
+
+// Bonus: wykres SVG z kolumny popularnosc
+$maxPop    = $uslugi ? max(1, max(array_column($uslugi, 'popularnosc'))) : 1;
 $szerEtyk  = 170;
 $maxSlupek = 330;
 $wysSlupek = 28;
@@ -110,10 +124,24 @@ $wysWykres = 10 + count($uslugi) * ($wysSlupek + $odstep);
           <figcaption>Piotr, Fordon</figcaption>
         </figure>
       </div>
-    </section>// fsdaf
+    </section>
 
     <section id="cennik">
       <h2>Cennik</h2>
+
+      <form method="get" action="#cennik"
+            style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 0 0 20px;">
+        <label for="max">Maksymalna cena (zł)</label>
+        <input id="max" name="max" type="number" min="0"
+               value="<?= $max !== null ? $max : '' ?>"
+               style="padding: 8px 12px; border: 1px solid #e4e4ef; border-radius: 8px; font: inherit; width: 120px;">
+        <button type="submit"
+                style="padding: 8px 18px; border: 0; border-radius: 999px; background: #4426ff; color: #fff; font: inherit; font-weight: 700; cursor: pointer;">Filtruj</button>
+        <?php if ($max !== null): ?>
+          <a href="index.php#cennik">Pokaż wszystkie</a>
+        <?php endif; ?>
+      </form>
+
       <table class="price-table">
         <thead>
           <tr><th>Usługa</th><th class="num">Cena</th></tr>
@@ -125,27 +153,32 @@ $wysWykres = 10 + count($uslugi) * ($wysSlupek + $odstep);
               <td class="num"><?= (int) $usluga['cena'] ?> zł</td>
             </tr>
           <?php endforeach; ?>
+          <?php if (!$uslugi): ?>
+            <tr><td colspan="2">Brak usług w tej cenie.</td></tr>
+          <?php endif; ?>
         </tbody>
       </table>
 
-      <h2>Porównanie cen</h2>
-      <svg class="chart" viewBox="0 0 600 <?= $wysWykres ?>" width="100%"
-           role="img" aria-labelledby="wykres-tytul"
-           style="max-width: 600px; height: auto; display: block; background: #fff; border: 1px solid #e4e4ef; border-radius: 14px;">
-        <title id="wykres-tytul">Wykres słupkowy cen usług</title>
-        <?php foreach ($uslugi as $i => $usluga):
-          $y      = 10 + $i * ($wysSlupek + $odstep);
-          $szer   = round($usluga['cena'] / $maxCena * $maxSlupek);
-          $srodek = $y + $wysSlupek / 2 + 5;
-        ?>
-          <text x="<?= $szerEtyk - 10 ?>" y="<?= $srodek ?>" text-anchor="end"
-                font-size="14" fill="#24243b"><?= htmlspecialchars($usluga['nazwa']) ?></text>
-          <rect x="<?= $szerEtyk ?>" y="<?= $y ?>" width="<?= $szer ?>" height="<?= $wysSlupek ?>"
-                rx="6" fill="#4426ff"/>
-          <text x="<?= $szerEtyk + $szer + 8 ?>" y="<?= $srodek ?>"
-                font-size="14" font-weight="700" fill="#14142b"><?= (int) $usluga['cena'] ?> zł</text>
-        <?php endforeach; ?>
-      </svg>
+      <?php if ($uslugi): ?>
+        <h2>Popularność usług</h2>
+        <svg class="chart" viewBox="0 0 600 <?= $wysWykres ?>" width="100%"
+             role="img" aria-labelledby="wykres-tytul"
+             style="max-width: 600px; height: auto; display: block; background: #fff; border: 1px solid #e4e4ef; border-radius: 14px;">
+          <title id="wykres-tytul">Wykres słupkowy popularności usług</title>
+          <?php foreach ($uslugi as $i => $usluga):
+            $y      = 10 + $i * ($wysSlupek + $odstep);
+            $szer   = round($usluga['popularnosc'] / $maxPop * $maxSlupek);
+            $srodek = $y + $wysSlupek / 2 + 5;
+          ?>
+            <text x="<?= $szerEtyk - 10 ?>" y="<?= $srodek ?>" text-anchor="end"
+                  font-size="14" fill="#24243b"><?= htmlspecialchars($usluga['nazwa']) ?></text>
+            <rect x="<?= $szerEtyk ?>" y="<?= $y ?>" width="<?= $szer ?>" height="<?= $wysSlupek ?>"
+                  rx="6" fill="#4426ff"/>
+            <text x="<?= $szerEtyk + $szer + 8 ?>" y="<?= $srodek ?>"
+                  font-size="14" font-weight="700" fill="#14142b"><?= (int) $usluga['popularnosc'] ?></text>
+          <?php endforeach; ?>
+        </svg>
+      <?php endif; ?>
 
       <h2>Najczęstsze pytania</h2>
       <div class="faq">
