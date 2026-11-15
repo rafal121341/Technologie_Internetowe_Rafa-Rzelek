@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
   }
   $blad = 'Błędny login lub hasło.';
-}
+}//6456
 ?>
 <!DOCTYPE html>
 <html lang="pl">
